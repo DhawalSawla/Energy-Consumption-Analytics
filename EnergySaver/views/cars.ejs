@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Energy Visualizer</title>
+    <!-- Bootstrap core CSS -->
+    <link href="stylesheets/bootstrap.css" rel="stylesheet">
+    
+    <!-- Custom styles for this template -->
+    <link href="stylesheets/main.css" rel="stylesheet">
+    
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	
+	<script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart"]});
+		/*
+		// With JQuery
+		$("#slider1").slider({
+			tooltip: 'always'
+		});
+		*/
+	</script>
+	 <script language="javascript">
+                function getInfo()
+                {
+                        var miles = parseFloat(document.getElementById("value1").value);
+                        var amtpaid = parseFloat(document.getElementById("value2").value);
+                        var energy1 = document.getElementById("energy1");
+                        var cost1 = document.getElementById("cost1");
+                        energy1.value = (miles*1.7)/5;
+                        var val=energy1.value;
+                        cost1.value = val*amtpaid;
+                        console.log('value is '+cost1.value);
+                        
+                        var miles = parseFloat(document.getElementById("value1").value);
+                        var mpg = parseFloat(document.getElementById("mpg").value);
+                        var pamount = parseFloat(document.getElementById("pamount").value);
+                        var energy2 = document.getElementById("energy2");
+                        var cost2 = document.getElementById("cost2");
+                        energy2.value = (miles/mpg)/0.08;
+                        cost2.value = (miles*2.7)/mpg;
+                        console.log('value is '+cost2.value);
+						
+						google.load("visualization", "1", {packages:["corechart"]});
+						var data = google.visualization.arrayToDataTable([
+							['Car Type', 'Electric Car', 'Petroleum Car'],
+							['Car Type', Number(energy1.value), Number(energy2.value)],
+							['', 0, 0]
+						]);
+
+						var options = {
+							title: 'Energy Consumption comparison between Electric Car and Petroleum Car',
+							vAxis: {title: '',  titleTextStyle: {color: 'blue'}},
+							hAxis: {title: 'Energy Consumption (KWH)',  titleTextStyle: {color: 'blue'}},
+						};
+
+						var chart = new google.visualization.BarChart(document.getElementById('bar_chart'));
+
+						chart.draw(data, options);
+						
+						//Second chart
+						google.load("visualization", "1", {packages:["corechart"]});
+						var data = google.visualization.arrayToDataTable([
+							['Car Type', 'Electric Car', 'Petroleum Car'],
+							['Car Type', Number(cost1.value), Number(cost2.value)],
+							['', 0, 0]
+						]);
+
+						var options = {
+							title: 'Cost comparison between Electric Car and Petroleum Car',
+							vAxis: {title: 'Cost of travelling($)',  titleTextStyle: {color: 'blue'}},
+							hAxis: {title: '',  titleTextStyle: {color: 'blue'}},
+						};
+
+						var chart = new google.visualization.ColumnChart(document.getElementById('column_chart'));
+
+						chart.draw(data, options);
+      }
+        </script>
+  </head>
+  
+  <body>
+  
+  <!-- Header Part -->
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="about">Energy Visualizer</a>
+        </div>
+      </div>
+    </div>
+
+	<h1 style="color:blue">Welcome to Energy Analyst Dashboard</h1>
+  	<h3>Here is the summary of Electric Car Energy Consumption over other cars.</h3>
+
+	<div>
+		miles = <input type="number" step="0.01" id="value1" name="miles"/> 
+	</div>
+	<div>
+		amount = <input type="number" step="0.01" id="value2" name="amtpaid" placeholder="Amount" value="0.12"/>
+	</div>
+    <div>
+		<input type="button" name="Submit" value="Click here" onclick="javascript:getInfo()"/>
+	</div>
+    <div>
+		energy = <input type="text" id="energy1" name="energy1" value=""/>
+	</div>
+	<div>
+        cost = <input type="text" id="cost1" name="cost1"/>
+	</div>
+    <div>
+		mpg = <input type="number" step="0.01" id="mpg" name="mpg" value="21"/> 
+	</div>
+    <div>
+		pamount = <input type="number" step="0.01" id="pamount" name="pamount" placeholder="Amount" value="2.7"/>
+	</div>
+<!--    <div>
+		<input type="button" name="Sumbit" value="p cal" onclick="javascript:getpInfo()"/>
+	</div>
+-->
+    <div>
+		energy = <input type="text" id="energy2" name="energy2" value=""/>
+	</div>
+	<div>
+		cost = <input type="text" id="cost2" name="cost2" value=""/>
+	</div>
+    
+ <!-- Dynamic part to be changed page wise -->   
+<!--<div id="columnchart_material" style="width: 900px; height: 500px;"></div>-->
+	<div id="bar_chart" style="width: 900px; height: 400px;"></div>
+  	
+	<div id="column_chart" style="width: 900px; height: 400px;"></div>
+	
+	<div id="dashboard">
+      <!--<table>
+        <tr style='vertical-align: top'>
+          <td style='width: 900px; font-size: 1.4em;'>
+            <div id="control1"></div>
+			<br>
+            <div id="control2"></div>
+            <div id="control3"></div>
+            <div id="control4"></div>
+			<div id="slider">
+				<input id="slider1" data-slider-id='data_slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+			</div>
+          </td>
+
+          <td style='width: 1400px; font-size: 1.4em;'>
+			<div style="float: left;" id="chart1"></div>
+            <div style="float: left;" id="chart2"></div>
+            <div style="float: left;" id="chart3"></div>
+            <div style="float: left;" id="chart4"></div>
+          </td>
+        </tr>
+      </table>-->
+      	<br><br>
+    </div>
+
+<br><br>
+<!-- Footer code  -->
+<div id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4">
+					<h4>Copyright</h4>
+					<p>
+						CMPE-272, SJSU
+					</p>
+				</div><!-- /col-lg-4 -->
+				
+				<div class="col-lg-4">
+					<h4>My Links</h4>
+					<p>
+						
+						<a href="http://twitter.com">Follow us on Twitter</a><br/>
+						<a href="http://facebook.com">Like us on Facebook</a>
+					</p>
+				</div>
+				
+				<div class="col-lg-4">
+					<h4>About Energy Visualizer</h4>
+					<p>Energy Visualizer Description</p>
+				</div>
+			
+			</div>
+		
+		</div>
+</div>
+<script src="bootstrap.min.js"></script>
+</body>
+</html>

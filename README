@@ -1,0 +1,3 @@
+Developed a website in Node.js integrated with Google charts using JSON to compare the energy consumption graphically at different levels (state, sector, area, etc).
+
+Compared energy consumption between Tesla Cars vs other cars and displayed the user’s profit percentage graphically.
